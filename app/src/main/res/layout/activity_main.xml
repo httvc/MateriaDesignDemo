@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+效果显示，视图滚动时，Toolbar会隐藏，这个效果是Android Support Library里面,
+新增的CoordinatorLayout, AppBarLayout实现的。通过AppBarLayout的子视图的属性控制。
+观察AppBarLayout的子布局，Toobar有app:layout_scrollFlags属性，这就是控制滑动时视图效果的属性。
+app:layout_scrollFlags有四个值：
+   scroll: 所有想滚动出屏幕的view都需要设置这个flag，没有设置这个flag的view将被固定在屏幕顶部。
+   例如，TabLayout 没有设置这个值，将会停留在屏幕顶部。
+   enterAlways: 设置这个flag时，向下的滚动都会导致该view变为可见，启用快速“返回模式”。
+   enterAlwaysCollapsed: 当你的视图已经设置minHeight属性又使用此标志时，
+   你的视图只能已最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。
+   exitUntilCollapsed: 滚动退出屏幕，最后折叠在顶端。
+
+为了ToolBar可以滚动，CoordinatorLayout里面,放一个带有可滚动的View.
+例子,放的是ViewPager,而ViewPager里面是放了RecylerView的,即是可以滚动的View。
+CoordinatorLayout包含的子视图中带有滚动属性的View需要设置app:layout_behavior属性。
+例如，示例中Viewpager设置了此属性。
+
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+为了使得Toolbar有滑动效果，必须做到如下三点:
+1. CoordinatorLayout作为布局的父布局容器。
+2. 给需要滑动的组件设置 app:layout_scrollFlags=”scroll|enterAlways” 属性。
+3. 给滑动的组件设置app:layout_behavior属性
+-->
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="httvc.com.materiadesigndemo.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="15dp"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"/>
+    </android.support.design.widget.AppBarLayout>
+
+   <!-- <include layout="@layout/content_main"/>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fitsSystemWindows="true"/>
+   <!-- <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:elevation="8dp"
+        android:src="@android:drawable/ic_dialog_email"/>
+
+</android.support.design.widget.CoordinatorLayout>
