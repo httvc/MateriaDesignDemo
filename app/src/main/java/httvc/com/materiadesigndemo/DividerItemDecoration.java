@@ -13,7 +13,7 @@ import android.view.View;
 /**
  * Created by Android Studio
  * Project：MatchLayout
- * Author：Jiafujie
+ * Author：httvc
  * Email：jfjie2013@163.com
  * Date：2016/1/13.
  */
